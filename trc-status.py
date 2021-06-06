@@ -9,20 +9,18 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 url = "https://newsinteractives.cbc.ca/longform-single/beyond-94"
 
-# Call the API.
+# Get the webpage
 request = urllib.request.Request(url)
 raw_response = urllib.request.urlopen(request).read()
 html = raw_response.decode("utf-8")
 
-# Setup beautifulsoup
+# Extract the data
 soup = BeautifulSoup(html, 'html.parser')
-
-# Find the elements
 counts = soup.select(".progress-row h3")
 counts = list(map(lambda x: int(x.getText().strip()), counts))
-total = functools.reduce(lambda a, b: a+b, counts)
-complete = counts[-1]
+complete = counts[-1] # Get last h3 element
+total = functools.reduce(lambda a, b: a+b, counts) # Calculate the total
 
-# Get the text contents
+# Output results as JSON
 print(json.dumps({ "total" : total, "complete" : complete }))
 
