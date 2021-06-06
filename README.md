@@ -10,5 +10,6 @@ You can add this script to a daily cron job that outputs to a file like so:
 
 Replace `SCRIPT_DIR` with the path to this repository on your server.
 
-Also includes a simple landing page for the data.
+Also includes a simple landing page for the data that refreshes constantly in
+the background.
 
