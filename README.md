@@ -5,7 +5,8 @@ A python script that outputs the current count of completed recommendations from
 You can add this script to a daily cron job that outputs to a file like so:
 
 ```
-0 1 * * * /usr/bin/python3 PATH_TO_SCRIPT_DIRECTORY/trc-status.py
-> PATH_TO_SCRIPT_DIRECTORY/trc-status.json
+0 1 * * * /usr/bin/python3 SCRIPT_DIR/trc-status.py > SCRIPT_DIR/trc-status.json
 ```
+
+Replace `SCRIPT_DIR` with the path to this repository on your server.
 
