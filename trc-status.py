@@ -22,5 +22,5 @@ complete = counts[-1] # Get last h3 element
 total = functools.reduce(lambda a, b: a+b, counts) # Calculate the total
 
 # Output results as JSON
-print(json.dumps({ "total" : total, "complete" : complete }))
+print(json.dumps({ "complete" : complete, "total" : total }))
 
