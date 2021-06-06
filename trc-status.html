@@ -23,6 +23,9 @@
     h6 {
       color: #832500;
     }
+    .time-remaining {
+      opacity: 0;
+    }
     h7 {
       position: absolute;
       bottom: 10px;
@@ -49,6 +52,7 @@
       transform: translateY(-50%);
     }
     .progress {
+      position: relative;
       background-color: rgba(0,0,0,0.05);
       margin-top: 20px;
       margin-bottom: 25px;
@@ -78,6 +82,14 @@
       display: none;
       opacity: 1.0;
     }
+    .loading {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: black;
+      opacity: 0.25;
+    }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
@@ -99,8 +111,12 @@
             completion+"%"
           );
           setTimeout(function() {
-            $(".progress-percent").fadeIn(250)
+            $(".progress-percent").fadeIn(250);
+            $(".loading").fadeOut(100);
           }, 1500)
+          setTimeout(function() {
+            $(".time-remaining").animate({ opacity: 1.0 })
+          }, 2000)
           var estCompletionYears = Math.ceil(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
           var estCompletionDate = new Date(now.getTime() + dateDiffMillis*(data.total/data.complete))
           //$(".start-date").html(pubDate.toDateString().slice(4))
@@ -117,8 +133,9 @@
         <h2>Calls to Action</h2>
         <div class="progress">
           <div class="progress-bar progress-bar-striped progress-bar-animated reverse slower-load" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="progress-percent"></span></div>
+          <span class="loading">Loading...</span>
         </div>
-        <h6>
+        <h6 class="time-remaining">
           Estimated time remaining: <span class="completion-estimate"></span>
         </h6>
       </div>
