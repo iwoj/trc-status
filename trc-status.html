@@ -3,7 +3,7 @@
   <head>
     <meta name="description" content="Webpage description goes here" />
     <meta charset="utf-8">
-    <title>TRC: Call to Action</title>
+    <title>TRC Calls to Action: Loading...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -27,14 +27,15 @@
       position: absolute;
       bottom: 10px;
       right: 10px;
-      font-size: 80%;
-      opacity: 0.25;
+      font-size: 70%;
+      color: #832500;
+      opacity: 0.3;
     }
     a {
-      color: black;
+      color: #832500;
     }
     a:hover {
-      color: black;
+      color: #832500;
     }
     .container {
       max-width: 900px;
@@ -57,6 +58,13 @@
     .progress-bar {
       background-color: #832500;
     }
+    .progress-bar-animated.slower {
+      -webkit-animation: progress-bar-stripes 2s linear infinite;
+      animation: progress-bar-stripes 2s linear infinite;
+    }
+    .progress-bar-animated.slower-load {
+      transition: width 2s ease;
+    }
     .progress-bar-animated.reverse {
       -webkit-animation-direction: reverse;
       -moz-animation-direction: reverse;
@@ -67,6 +75,7 @@
     .progress-percent {
       color: orange;
       font-weight: bold;
+      display: none;
       opacity: 1.0;
     }
     </style>
@@ -89,6 +98,9 @@
           $(".progress-percent").html(
             completion+"%"
           );
+          setTimeout(function() {
+            $(".progress-percent").fadeIn(250)
+          }, 1500)
           var estCompletionYears = Math.ceil(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
           var estCompletionDate = new Date(now.getTime() + dateDiffMillis*(data.total/data.complete))
           //$(".start-date").html(pubDate.toDateString().slice(4))
@@ -103,8 +115,8 @@
       <div class="v-center">
         <h1>Truth and Reconciliation in Canada</h1>
         <h2>Calls to Action</h2>
-        <div class="progress reverse">
-          <div class="progress-bar progress-bar-striped progress-bar-animated reverse" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="progress-percent"></span></div>
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped progress-bar-animated reverse slower-load" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"><span class="progress-percent"></span></div>
         </div>
         <h6>
           Estimated time remaining: <span class="completion-estimate"></span>
