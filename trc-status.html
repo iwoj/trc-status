@@ -105,8 +105,15 @@
       var pubDate = new Date(2015, 11, 15, 12, 0, 0, 0); // Dec 15, 2015
       var now = new Date()
       var dateDiffMillis = Math.abs(now - pubDate)
+      
       $( function() {
+        loadData();
+        setInterval( loadData, 1000 * 60 * 60); // Reloads hourly.
+      });
+      
+      function loadData() {
         $.getJSON("trc-status.json", function(data) {
+          console.log("Loaded latest Calls to Action data.")
           var completion = Math.floor(data.complete/data.total*100)
           $(".progress-bar").attr(
             "aria-valuenow", completion
@@ -130,7 +137,7 @@
           //$(".completion-estimate").html(estCompletion.toDateString().slice(4))
           $(".completion-estimate").html(estCompletionYears + " years")
         })
-      });
+      }
     </script>
   </head>
   <body>
