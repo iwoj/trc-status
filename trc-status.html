@@ -42,6 +42,7 @@
       opacity: 0;
     }
     .footer {
+      display: none;
       font-size: 70%;
       color: #832500;
       opacity: 0.8;
@@ -128,7 +129,9 @@
       function loadData() {
         $.getJSON("trc-status.json", function(data) {
           console.log("Loaded latest Calls to Action data.")
+          
           var completion = Math.floor(data.complete/data.total*100)
+          
           $(".progress-bar").attr(
             "aria-valuenow", completion
           );
@@ -138,20 +141,24 @@
           $(".progress-percent").html(
             completion+"%"
           );
+          
+          var estCompletionYears = Math.ceil(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
+          $(".completion-estimate").html(estCompletionYears + " years")
+          
+          pulse($(".loading"))
+          
           setTimeout(function() {
             $(".progress-percent").fadeIn(250);
-            //$(".loading").fadeOut(100);
             $(".loading").remove();
           }, 4000)
+          
           setTimeout(function() {
             $(".time-remaining").animate({ opacity: 1.0 })
           }, 4500)
-          pulse($(".loading"))
-          var estCompletionYears = Math.ceil(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
-          var estCompletionDate = new Date(now.getTime() + dateDiffMillis*(data.total/data.complete))
-          //$(".start-date").html(pubDate.toDateString().slice(4))
-          //$(".completion-estimate").html(estCompletion.toDateString().slice(4))
-          $(".completion-estimate").html(estCompletionYears + " years")
+          
+          setTimeout(function() {
+            $(".footer").fadeIn(250);
+          }, 5000)
         })
       }
 
