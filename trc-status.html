@@ -89,9 +89,6 @@
       -webkit-animation: progress-bar-stripes 2s linear infinite;
       animation: progress-bar-stripes 2s linear infinite;
     }
-    .progress-bar-animated.slower-load {
-      transition: width 4s ease;
-    }
     .progress-bar-animated.reverse {
       -webkit-animation-direction: reverse;
       -moz-animation-direction: reverse;
@@ -123,10 +120,15 @@
       var pubDate = new Date(2015, 11, 15, 12, 0, 0, 0); // Dec 15, 2015
       var now = new Date()
       var dateDiffMillis = Math.abs(now - pubDate)
-      
+      var loadingDelay = 1000 * 3; // 3 seconds
+      var reloadInterval = 1000 * 60 * 60; // Hourly
+      var barLoadDuration = 1000 * 4 // 4 seconds
+
       $( function() {
-        loadData();
-        setInterval( loadData, 1000 * 60 * 60); // Reloads hourly.
+        $(".progress-bar-animated.slower-load").css("transition","width " + (barLoadDuration/1000) + "s ease")
+        pulse($(".loading"))
+        setTimeout( loadData, loadingDelay );
+        setInterval( loadData, reloadInterval );
       });
       
       function loadData() {
@@ -148,20 +150,18 @@
           var estCompletionYears = Math.ceil(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
           $(".completion-estimate").html(estCompletionYears + " years")
           
-          pulse($(".loading"))
-          
           setTimeout(function() {
             $(".progress-percent").fadeIn(250);
             $(".loading").remove();
-          }, 4000)
+          }, barLoadDuration)
           
           setTimeout(function() {
             $(".time-remaining").animate({ opacity: 1.0 })
-          }, 4500)
+          }, barLoadDuration + 500)
           
           setTimeout(function() {
             $(".footer").fadeIn(250);
-          }, 5500)
+          }, barLoadDuration + 1500)
         })
       }
 
