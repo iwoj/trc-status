@@ -19,6 +19,7 @@
       background: linear-gradient(90deg, rgba(255,125,0,1) 0%, rgba(255,156,0,1) 100%);
       text-align: center;
       height: 100vh;
+      height: -webkit-fill-available;
       font-family: Helvetica, Arial, sans-serif;
     }
     h1 {
@@ -26,7 +27,7 @@
       color: black;
     }
     h2 {
-      font-size: 3em;
+      font-size: 2.5em;
       font-weight: bold;
     }
     @media only screen and (max-width: 600px) {
@@ -128,7 +129,7 @@
       var dateDiffMillis = Math.abs(now - pubDate)
       var loadingDelay = 1000 * 3; // 3 seconds
       var reloadInterval = 1000 * 60 * 60; // Hourly
-      var barLoadDuration = 1000 * 8 // 8 seconds
+      var barLoadDuration = 1000 * 7 // 7 seconds
 
       $( function() {
         $(".progress-bar-animated.slower-load").css("transition","width " + (barLoadDuration/1000) + "s ease")
