@@ -156,7 +156,7 @@
             completion+"%"
           );
           
-          var estCompletionYears = Math.ceil(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
+          var estCompletionYears = Math.round(dateDiffMillis*(data.total/data.complete)/1000/60/60/24/365)
           $(".completion-estimate").html(estCompletionYears + " years")
           
           setTimeout(function() {
