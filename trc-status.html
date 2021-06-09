@@ -129,9 +129,9 @@
       var pubDate = new Date(2015, 11, 15, 12, 0, 0, 0); // Dec 15, 2015
       var now = new Date()
       var dateDiffMillis = Math.abs(now - pubDate)
-      var loadingDelay = 1000 * 3; // 3 seconds
+      var loadingDelay = 1000 * 2; // 3 seconds
       var reloadInterval = 1000 * 60 * 60; // Hourly
-      var barLoadDuration = 1000 * 7 // 7 seconds
+      var barLoadDuration = 1000 * 6 // 6 seconds
       
       $( function() {
         $(".progress-bar-animated.slower-load").css("transition","width " + (barLoadDuration/1000) + "s ease")
@@ -144,7 +144,7 @@
         $.getJSON("trc-status.json", function(data) {
           console.log("Loaded latest Calls to Action data.")
           
-          var completion = Math.floor(data.complete/data.total*100)
+          var completion = Math.round(data.complete/data.total*100)
           
           $(".progress-bar").attr(
             "aria-valuenow", completion
@@ -170,7 +170,7 @@
           
           setTimeout(function() {
             $(".footer").fadeIn(250);
-          }, barLoadDuration + 1500)
+          }, barLoadDuration + 1000)
         })
       }
 
