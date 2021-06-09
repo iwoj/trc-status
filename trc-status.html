@@ -18,8 +18,7 @@
       background: rgb(255,125,0);
       background: linear-gradient(90deg, rgba(255,125,0,1) 0%, rgba(255,156,0,1) 100%);
       text-align: center;
-      height: -webkit-fill-available;
-      height: 100vh;
+      height: 100%;
       font-family: Helvetica, Arial, sans-serif;
     }
     h1 {
@@ -130,7 +129,7 @@
       var loadingDelay = 1000 * 3; // 3 seconds
       var reloadInterval = 1000 * 60 * 60; // Hourly
       var barLoadDuration = 1000 * 7 // 7 seconds
-
+      
       $( function() {
         $(".progress-bar-animated.slower-load").css("transition","width " + (barLoadDuration/1000) + "s ease")
         pulse($(".loading"))
