@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Live progress bar of the TRC's Calls to Action" />
     <meta charset="utf-8">
     <meta property="og:image" content="https://ianwojtowicz.com/trc-status/orange.jpg"/>
@@ -18,8 +18,8 @@
       background: rgb(255,125,0);
       background: linear-gradient(90deg, rgba(255,125,0,1) 0%, rgba(255,156,0,1) 100%);
       text-align: center;
-      height: 100%;
       font-family: Helvetica, Arial, sans-serif;
+      height: 100vh;
     }
     h1 {
       font-size: 1em;
@@ -29,7 +29,10 @@
       font-size: 2.5em;
       font-weight: bold;
     }
-    @media only screen and (max-width: 600px) {
+    @media not all and (hover:hover) {
+      body {
+        height: -webkit-fill-available;
+      }
       h2 {
         font-size: 1.81em;
       }
