@@ -21,9 +21,16 @@
       font-family: Helvetica, Arial, sans-serif;
       height: 100vh;
     }
+    body.dark {
+      background: rgb(0,0,0);
+      color: white;
+    }
     h1 {
       font-size: 1em;
       color: black;
+    }
+    .dark h1 {
+      color: white;
     }
     h2 {
       font-size: 2.5em;
@@ -40,15 +47,27 @@
     h2 a {
       color: black;
     }
+    .dark h2 a {
+      color: white;
+    }
     h6 {
       color: #832500;
+    }
+    .dark h6 {
+      color: #c83900;
     }
     a {
       color: #832500;
       font-style: italic;
     }
+    .dark a {
+      color: #c83900;
+    }
     a:hover {
       color: #832500;
+    }
+    .dark a:hover {
+      color: #c83900;
     }
     .time-remaining {
       opacity: 0;
@@ -58,6 +77,12 @@
       font-size: 70%;
       color: #832500;
       opacity: 0.8;
+    }
+    .dark .footer {
+      color: #c83900;
+    }
+    .projection .footer {
+      opacity: 0;
     }
     .source {
       position: absolute;
@@ -92,8 +117,14 @@
     .progress.progress-bar-striped {
       background-image: linear-gradient(45deg,rgba(0,0,0,.03) 25%,transparent 25%,transparent 50%,rgba(0,0,0,.03) 50%,rgba(0,0,0,.03) 75%,transparent 75%,transparent);
     }
+    .dark .progress.progress-bar-striped {
+      background-image: linear-gradient(45deg,rgba(255,255,255,.1) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.1) 75%,transparent 75%,transparent);
+    }
     .progress-bar {
       background-color: #832500;
+    }
+    .dark .progress-bar {
+      background-color: #cd3a00;
     }
     .progress-bar-animated.slower {
       -webkit-animation: progress-bar-stripes 2s linear infinite;
@@ -112,6 +143,9 @@
       display: none;
       opacity: 0.7;
     }
+    .dark .progress-percent {
+      color: black;
+    }
     .loading {
       position: absolute;
       top: 10px;
@@ -121,6 +155,10 @@
       opacity: 0.33;
       font-weight: normal;
       font-size: 1em;
+    }
+    .dark .loading {
+      color: white;
+      opacity: 0.66;
     }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -135,6 +173,7 @@
       var barLoadDuration = 1000 * 6 // 6 seconds
       
       $( function() {
+        setDisplayMode();
         $(".progress-bar-animated.slower-load").css("transition","width " + (barLoadDuration/1000) + "s ease")
         pulse($(".loading"))
         setTimeout( loadData, loadingDelay );
@@ -181,6 +220,17 @@
             pulse(element);
           });
         });
+      }
+
+      function setDisplayMode() {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        if (urlParams.get("mode") == "dark") {
+          $("body").addClass("dark")
+        } else if (urlParams.get("mode") == "projection") {
+          $("body").addClass("dark")
+          $("body").addClass("projection")
+        }
       }
     </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
