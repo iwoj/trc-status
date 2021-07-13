@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>Reconciliation: Loading...</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Live progress bar of the TRC's Calls to Action" />
     <meta charset="utf-8">
@@ -9,8 +10,8 @@
     <meta name="twitter:title" content="Reconciliation: Loading..."/>
     <meta name="twitter:description" content="Live progress bar of the TRC's Calls to Action"/>
     <meta name="twitter:image" content="https://ianwojtowicz.com/trc-status/orange.jpg"/>
-    <title>Reconciliation: Loading...</title>
-    <meta name="author" content="">
+    <meta name="author" content=""/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <style>
     body {
@@ -118,7 +119,7 @@
       background-image: linear-gradient(45deg,rgba(0,0,0,.03) 25%,transparent 25%,transparent 50%,rgba(0,0,0,.03) 50%,rgba(0,0,0,.03) 75%,transparent 75%,transparent);
     }
     .dark .progress.progress-bar-striped {
-      background-image: linear-gradient(45deg,rgba(255,255,255,.1) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.1) 50%,rgba(255,255,255,.1) 75%,transparent 75%,transparent);
+      background-image: linear-gradient(45deg,rgba(255,255,255,.2) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.2) 50%,rgba(255,255,255,.2) 75%,transparent 75%,transparent);
     }
     .progress-bar {
       background-color: #832500;
@@ -174,6 +175,7 @@
       
       $( function() {
         setDisplayMode();
+        goFullscreen("body");
         $(".progress-bar-animated.slower-load").css("transition","width " + (barLoadDuration/1000) + "s ease")
         pulse($(".loading"))
         setTimeout( loadData, loadingDelay );
@@ -232,6 +234,38 @@
           $("body").addClass("projection")
         }
       }
+
+      function goFullscreen(id) {
+        var element = document.getElementById(id); 
+
+        var isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+          (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+          (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+          (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+        var docElm = document.documentElement;
+        if (!isInFullScreen) {
+          if (element.requestFullscreen) {
+            element.requestFullscreen();
+          } else if (element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+          } else if (element.webkitRequestFullScreen) {
+            element.webkitRequestFullScreen();
+          } else if (element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+          }
+        }
+      }
     </script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T3QJ2V8N43"></script>
@@ -243,7 +277,7 @@
           gtag('config', 'G-T3QJ2V8N43');
     </script>
   </head>
-  <body>
+  <body id="body">
     <div class="container">
       <div class="v-center">
         <h1>Truth and Reconciliation Commission of Canada</h1>
