@@ -16,10 +16,11 @@ html = raw_response.decode("utf-8")
 
 # Extract the data
 soup = BeautifulSoup(html, 'html.parser')
-counts = soup.select(".progress-row h3")
+counts = soup.select(".resolution-count")
 counts = list(map(lambda x: int(x.getText().strip()), counts))
-complete = counts[-1] # Get last h3 element
-total = functools.reduce(lambda a, b: a+b, counts) # Calculate the total
+complete = counts[3] # Get 4th element
+#total = functools.reduce(lambda a, b: a+b, counts) # Calculate the total
+total = 94
 
 # Output results as JSON
 print(json.dumps({ "complete" : complete, "total" : total }))
