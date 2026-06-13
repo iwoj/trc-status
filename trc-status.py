@@ -1,27 +1,49 @@
 from bs4 import BeautifulSoup
-import urllib.parse
-import urllib.request
-import ssl
-import functools
+import subprocess
 import json
 
-ssl._create_default_https_context = ssl._create_unverified_context
+url = "https://www.cbc.ca/newsinteractives/beyond-94"
 
-url = "https://newsinteractives.cbc.ca/longform-single/beyond-94"
+def fetch_html(url):
+    result = subprocess.run(
+        [
+            "curl",
+            "-L",
+            "--silent",
+            "--show-error",
+            "--fail",
+            "--max-time", "60",
+            "-A",
+            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 trcprogress.ca",
+            url
+        ],
+        capture_output=True,
+        text=True
+    )
 
-# Get the webpage
-request = urllib.request.Request(url)
-raw_response = urllib.request.urlopen(request).read()
-html = raw_response.decode("utf-8")
+    if result.returncode != 0:
+        raise RuntimeError(f"curl failed: {result.stderr}")
 
-# Extract the data
-soup = BeautifulSoup(html, 'html.parser')
+    return result.stdout
+
+
+html = fetch_html(url)
+
+soup = BeautifulSoup(html, "html.parser")
+
 counts = soup.select(".resolution-count")
-counts = list(map(lambda x: int(x.getText().strip()), counts))
-complete = counts[3] # Get 4th element
-#total = functools.reduce(lambda a, b: a+b, counts) # Calculate the total
+
+parsed_counts = []
+for c in counts:
+    try:
+        parsed_counts.append(int(c.get_text(strip=True)))
+    except:
+        pass
+
+complete = parsed_counts[3] if len(parsed_counts) > 3 else None
 total = 94
 
-# Output results as JSON
-print(json.dumps({ "complete" : complete, "total" : total }))
-
+print(json.dumps({
+    "complete": complete,
+    "total": total
+}))
